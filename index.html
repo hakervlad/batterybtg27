@@ -1,5 +1,30 @@
-<html>
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Redirecting...</title>
+        <script>
+            window.onload = function() {
+                // Überprüfen, ob die Login-Daten in der Session gespeichert sind
+                const username = sessionStorage.getItem("username");
+                const role = sessionStorage.getItem("role");
+
+                if (username && role) {
+                    // Wenn die Daten vorhanden sind, weiter zur Main-Seite
+                    if (role === "tutor") {
+                        window.location.href = "main-tutor.html";
+                    } else {
+                        window.location.href = 'main-student.html';
+                    }
+                } else {
+                    // Wenn die Daten nicht vorhanden sind, weiter zur Login-Seite
+                    window.location.href = "login.html";
+                }
+            };
+        </script>
+    </head>
     <body>
-        <p>Hello World!</p>
+        <p>Sie werden in Kürze zur richtigen Seite weitergeleitet...</p>
     </body>
 </html>

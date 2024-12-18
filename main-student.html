@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <!-- Meta -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Titel -->
+        <title>Main</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+            main {
+                flex: 1;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                background-color: #f4f4f9;
+                padding: 20px;
+                gap: 20px;
+            }
+            .mascot-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 300px;
+                height: 400px;
+                padding: 20px;
+            }
+            .mascot-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .fach-container {
+                width: 1400px;
+                height: 790px;
+                border: 1px solid #ccc;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                overflow-y: auto;
+            }
+            .fach {
+                position: relative;
+                width: 100%;
+                display: block;
+            }
+            .fach-content {
+                display: none;
+                position: flex;
+                top: 100%;
+                left: 0;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+            .fach-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .fach-content a:hover {
+                background-color: #f1f1f1;
+            }
+            .show {
+                display: block;
+            }
+            .full-width-button {
+                width: 100%;
+                text-align: left;
+                padding-left: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <!-- Flexbox für das Logo und den Text -->
+            <div style="display: flex; align-items: center;">
+                <!-- Logo mit Link -->
+                <a href="#" onclick="redirectToMainPage()">
+                    <img src="textures/logo-header.png" alt="Logo">
+                </a>
+
+                <!-- Titel/Navigation -->
+                <h1>Main</h1>
+            </div>
+
+            <!-- Logout Button -->
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </header>
+        <main>
+            <!-- Fächer Dropdowns -->
+            <div class="fach-container">
+                <!-- Fach 1 -->
+                <div class="fach">
+                    <!-- Dropdown Button -->
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Prog</button>
+                    
+                    <!-- Dropdown Inhalt -->
+                    <div id="fach-content-1" class="fach-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+
+                <!-- Fach 2 -->
+                <div class="fach">
+                    <!-- Dropdown Button -->
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">DuA</button>
+                    
+                    <!-- Dropdown Inhalt -->
+                    <div id="fach-content-2" class="fach-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Großes Maskottchen rechts -->
+            <div class="mascot-container">
+                <img src="textures/battery1.png" alt="Mascot">
+            </div>
+        </main>
+        <footer>
+            <!-- Text im Footer -->
+            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="js/logout.js"></script>
+        <script src="js/redirectToMainPage.js"></script>
+        <script src="js/loadLoginData.js"></script>
+        <script>
+            // Funktion zum Umschalten der Sichtbarkeit eines Dropdown-Menüs
+            function toggleDropdown(id) {
+                // Holen des Dropdown-Elements anhand der übergebenen ID
+                document.getElementById(id).classList.toggle("show");
+                // Mit classList.toggle wird die Klasse "show" hinzugefügt oder entfernt, je nachdem, ob sie bereits vorhanden ist, wodurch das Dropdown sichtbar oder unsichtbar gemacht wird
+            }
+
+            // Funktion, die bei einem Klick auf das Fenster aufgerufen wird
+            window.onclick = function(event) {
+                // Überprüfen, ob der Klick nicht auf ein Button-Element im Dropdown erfolgt ist
+                if (!event.target.matches('.fach button')) {
+                    // Holen aller Dropdown-Menüs auf der Seite
+                    var dropdowns = document.getElementsByClassName("fach-content");
+                    // Schleife durch alle Dropdown-Menüs
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        // Überprüfen, ob das Dropdown sichtbar ist (die Klasse "show" enthält)
+                        if (openDropdown.classList.contains('show')) {
+                            // Entfernen der "show"-Klasse, um das Dropdown unsichtbar zu machen
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

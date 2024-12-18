@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Titel -->
     <title>Login Seite</title>
+
+    <!-- CSS -->
     <style>
         * {
             margin: 0;
@@ -99,33 +104,49 @@
 </head>
 <body>
     <header>
-        <img src="textures/logo-header.png" alt="Logo">
+        <!-- Logo mit Link -->
+        <a href="index.html">
+            <img src="textures/logo-header.png" alt="Logo">
+        </a>
+
+        <!-- Titel/Navigation -->
         <h1>Login Seite</h1>
     </header>
     <main>
+        <!-- Login Feld -->
         <div class="login-container">
+            <!-- Titel -->
             <h2>Login</h2>
+
+            <!-- Eingabefelder -->
             <form id="loginForm">
+                <!-- Benutzername -->
                 <div class="form-group">
                     <label for="username">Benutzername</label>
                     <input type="text" id="username" name="username" required>
                 </div>
+
+                <!-- Passwort -->
                 <div class="form-group">
                     <label for="password">Passwort</label>
                     <input type="password" id="password" name="password" required>
                 </div>
+
+                <!-- Login Button -->
                 <button type="button" class="login-btn" onclick="handleLogin()">Login</button>
             </form>
         </div>
     </main>
     <footer>
-        <p>&copy; 2024 - Willkommen auf der Login-Seite</p>
+        <!-- Text im Footer -->
+        <p>Willkommen auf der Login-Seite</p>
     </footer>
 
+    <!-- Scripts -->
     <script>
         const accounts = [
-            ["timhorn", "abc123"],
-            ["vlad", "ilbattery"]
+            ["timhorn", "abc123", "student"],
+            ["vlad", "ilbattery", "tutor"]
         ];
 
         function handleLogin() {
@@ -136,10 +157,19 @@
 
             if (account) {
                 if (account[1] === password) {
-                    alert(`Login erfolgreich! Benutzername: ${username}`);
-                    window.location.href = 'main.html';
+                    //alert(`Login erfolgreich! Benutzername: ${username}`);
+                    sessionStorage.setItem("username", username);
+                    sessionStorage.setItem("role", account[2]);
+
+                    if (account[2] === "tutor") {
+                        window.location.href = "main-tutor.html";
+                    } else {
+                        window.location.href = 'main-student.html';
+                    }
+                    
+                }else {
+                    alert(`Das Passwort ist ungültig!`);
                 }
-                alert(`Das Passwort ist ungültig!`);
             } else {
                 alert('Der Benutzername ist ungültig!');
             }
