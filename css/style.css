@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center; /* Vertikale Ausrichtung des Textes */
+    justify-content: space-between; /* Platzierung von Logo und Logout-Button */
+    position: relative; /* Ermöglicht die Positionierung des Logout-Buttons innerhalb des Headers */
+}
+
+header img {
+    height: 40px;
+    margin-right: 15px;
+}
+
+header h1 {
+    margin: 0; /* Verhindert, dass der Titel eine zusätzliche Margen hat */
+    flex-grow: 1; /* Der Titel wächst, um den verbleibenden Platz im Header zu nutzen */
+}
+
+header .logout-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    position: absolute; /* Absolute Positionierung */
+    right: 20px; /* Abstand vom rechten Rand */
+    top: 50%; /* Vertikal mittig im Header */
+    transform: translateY(-50%); /* Korrektur für exakte Mitte */
+}
+
+header .logout-button:hover {
+    background-color: #d32f2f;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+}
