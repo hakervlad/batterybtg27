@@ -144,24 +144,28 @@
 
     <!-- Scripts -->
     <script>
-        const accounts = [
-            ["timhorn", "abc123", "student"],
-            ["vlad", "ilbattery", "tutor"]
-        ];
+        const data = {
+            "accounts":[
+                {"username":"vlad", "password":"ilbattery", "role":"student", "subjects":["Programmieren_I"]},
+                {"username":"till", "password":"till", "role":"student", "subjects":["Programmieren_I", "Datenstrukturen_und_Algorithmen"]},
+                {"username":"tim", "password":"abc123", "role":"tutor", "subjects":["Programmieren_I", "Datenstrukturen_und_Algorithmen"]}
+            ]
+        }
 
         function handleLogin() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            const account = accounts.find(account => account[0] === username);
+            const account = data.accounts.find(account => account.username === username);
 
             if (account) {
-                if (account[1] === password) {
+                if (account.password === password) {
                     //alert(`Login erfolgreich! Benutzername: ${username}`);
                     sessionStorage.setItem("username", username);
-                    sessionStorage.setItem("role", account[2]);
+                    sessionStorage.setItem("role", account.role);
+                    sessionStorage.setItem("subjects", account.subjects);
 
-                    if (account[2] === "tutor") {
+                    if (account.role === "tutor") {
                         window.location.href = "main-tutor.html";
                     } else {
                         window.location.href = 'main-student.html';
