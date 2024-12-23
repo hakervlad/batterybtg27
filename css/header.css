@@ -1,16 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
+/* Header fixieren */
 header {
     background-color: #333;
     color: white;
@@ -18,7 +6,12 @@ header {
     display: flex;
     align-items: center; /* Vertikale Ausrichtung des Textes */
     justify-content: space-between; /* Platzierung von Logo und Logout-Button */
-    position: relative; /* Ermöglicht die Positionierung des Logout-Buttons innerhalb des Headers */
+    position: fixed; /* Fixiert den Header oben */
+    box-sizing: border-box;
+    top: 0; /* Header bleibt oben */
+    left: 0;
+    width: 100%; /* Header nimmt volle Breite ein */
+    z-index: 1000; /* Header bleibt immer oben */
 }
 
 header img {
@@ -47,24 +40,4 @@ header .logout-button {
 
 header .logout-button:hover {
     background-color: #d32f2f;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 20px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-main {
-    flex: 1;
-    margin-left: 250px; /* Sidebar Platz */
-    margin-right: 0px; /* Abstand bis zum Mascot */
-    padding: 20px;
-    margin-top: 60px; /* Abstand nach dem Header */
-    overflow-y: auto;
-    position: relative; /* Verhindert, dass der Main-Bereich hinter die Sidebar verschwindet */
 }

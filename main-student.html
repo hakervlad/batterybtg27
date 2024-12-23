@@ -9,31 +9,14 @@
         <title>Main</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/mascot.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/sidebar.css">
+        <link rel="stylesheet" href="css/body.css">
         <style>
-            main {
-                flex: 1;
-                display: flex;
-                justify-content: flex-start;
-                align-items: flex-start;
-                background-color: #f4f4f9;
-                padding: 20px;
-                gap: 20px;
-            }
-            .mascot-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 300px;
-                height: 400px;
-                padding: 20px;
-            }
-            .mascot-container img {
-                max-width: 100%;
-                height: auto;
-            }
             .fach-container {
-                width: 100%;
                 height: auto;
                 border: 1px solid #ccc;
                 padding: 20px;
@@ -45,7 +28,6 @@
 
             .fach {
                 position: relative;
-                width: 100%;
                 display: block;
             }
 
@@ -53,8 +35,7 @@
             .fach-content {
                 display: block;
                 position: relative;
-                background-color: #f4f4f9; /* Gleicher Hintergrund wie die Sidebar */
-                width: 100%;
+                background-color: #e7e7ec; /* Gleicher Hintergrund wie die Sidebar */
                 box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
                 border-radius: 5px; /* Abgerundete Ecken */
                 padding: 10px;
@@ -153,7 +134,7 @@
                         ]
                     },
                     {
-                        "name": "Datenstrukturen und Algorithmen", 
+                        "name": "Datenstrukturen_und_Algorithmen", 
                         "assignments": [
                             {"name": "Assignment_01"},
                             {"name": "Assignment_02"},
@@ -181,7 +162,7 @@
                     // Button für das Fach
                     const fachButton = document.createElement('button');
                     fachButton.classList.add('full-width-button');
-                    fachButton.textContent = subject.name;
+                    fachButton.textContent = subject.name.replaceAll('_', ' ');
                     
                     // Erstelle die Fach-Inhalte
                     const fachContentDiv = document.createElement('div');
@@ -191,7 +172,7 @@
                     subject.assignments.forEach(assignment => {
                         const assignmentLink = document.createElement('a');
                         assignmentLink.href = 'assignment-student.html?subject=' + subject.name + '&assignment=' + assignment.name;
-                        assignmentLink.textContent = assignment.name;
+                        assignmentLink.textContent = assignment.name.replaceAll('_', ' ');
                         fachContentDiv.appendChild(assignmentLink);
                     });
                     

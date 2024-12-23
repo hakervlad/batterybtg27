@@ -1,0 +1,74 @@
+/* Sidebar-Styling */
+.sidebar {
+    width: 250px;
+    background-color: #dedee3;
+    padding: 20px;
+    position: fixed;
+    top: 60px; /* Sidebar nach dem Header */
+    bottom: 0;
+    left: 0;
+    height: calc(100vh - 60px); /* Sidebar-Höhe abzüglich der Header-Höhe */
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling für den Sidebar-Link */
+.sidebar a {
+    text-decoration: none; /* Entfernt die Standard-Unterstreichung */
+    color: inherit; /* Erbt die Textfarbe des Eltern-Elements (hier des h2) */
+    display: inline-block; /* Der Link nimmt nur die Breite des Textes ein */
+    padding: 5px 0; /* Etwas Abstand oben und unten für den Link */
+}
+
+/* Styling für das h2 in der Sidebar */
+.sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 10px; /* Abstand nach unten */
+    font-size: 1.5rem; /* Größere Schrift für den Titel */
+    font-weight: bold;
+    cursor: pointer; /* Zeigt an, dass es klickbar ist */
+    transition: color 0.3s ease; /* Sanfter Übergang der Textfarbe beim Hover */
+    padding-left: 5px; /* Etwas Abstand nach links, um den Link korrekt auszurichten */
+}
+
+/* Hover-Effekt für den Titel in der Sidebar */
+.sidebar h2:hover {
+    color: #4CAF50; /* Farbe beim Hover */
+}
+
+/* Optional: Verhindert, dass der Link die volle Breite der Sidebar einnimmt */
+.sidebar a {
+    display: inline-block;
+    width: auto; /* Setzt die Breite des Links auf die Textbreite */
+}
+
+.fach {
+    margin-bottom: 10px;
+}
+
+.fach-button {
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.fach-content {
+    display: none;
+    padding-left: 20px;
+}
+
+.fach-content a {
+    color: black;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.fach-content a:hover {
+    background-color: #cccccc;
+}

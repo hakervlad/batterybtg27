@@ -9,182 +9,73 @@
         <title>Main</title>
 
         <!-- Skript Bibliotheken -->
+        <!-- Packen von ZIP-Dateien -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <!-- Icons für Download-Button -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/sidebar.css">
+        <link rel="stylesheet" href="css/mascot.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/body.css">
         <style>
-            .mascot-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 300px;
-                height: 400px;
-                padding: 20px;
-                position: fixed; /* Fixiert den Container */
-                right: 0; /* Positioniert den Container an der rechten Seite */
-                top: 50%; /* Vertikale Zentrierung */
-                transform: translateY(-50%); /* Exakte mittige Ausrichtung */
-            }
-
-            .mascot-container img {
-                max-width: 100%; /* Bild wird auf die maximale Breite des Containers angepasst */
-                height: auto; /* Höhe bleibt im Verhältnis zur Breite */
-            }
-
+            /* Allgemein */
             * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
 
-            body {
-                font-family: Arial, sans-serif;
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-            }
-
-            /* Header fixieren */
-            header {
-                background-color: #333;
-                color: white;
-                padding: 10px 20px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                position: fixed; /* Fixiert den Header oben */
-                top: 0; /* Header bleibt oben */
-                left: 0;
-                width: 100%; /* Header nimmt volle Breite ein */
-                z-index: 1000; /* Header bleibt immer oben */
-            }
-
-            header img {
-                height: 40px;
-                margin-right: 15px;
-            }
-
-            header h1 {
-                margin: 0;
-                flex-grow: 1;
-            }
-
-            header .logout-button {
-                background-color: #f44336;
-                color: white;
-                border: none;
-                padding: 8px 16px;
-                cursor: pointer;
-                font-size: 14px;
-                border-radius: 5px;
-                position: absolute;
-                right: 20px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-
-            header .logout-button:hover {
-                background-color: #d32f2f;
-            }
-
-            /* Sidebar-Styling */
-            .sidebar {
-                width: 250px;
-                background-color: #dedee3;
-                padding: 20px;
-                position: fixed;
-                top: 60px; /* Sidebar nach dem Header */
-                bottom: 0;
-                left: 0;
-                height: calc(100vh - 60px); /* Sidebar-Höhe abzüglich der Header-Höhe */
-                overflow-y: auto;
-                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            }
-
-            /* Styling für den Sidebar-Link */
-            .sidebar a {
-                text-decoration: none; /* Entfernt die Standard-Unterstreichung */
-                color: inherit; /* Erbt die Textfarbe des Eltern-Elements (hier des h2) */
-                display: inline-block; /* Der Link nimmt nur die Breite des Textes ein */
-                padding: 5px 0; /* Etwas Abstand oben und unten für den Link */
-            }
-
-            /* Styling für das h2 in der Sidebar */
-            .sidebar h2 {
-                margin-top: 0;
-                margin-bottom: 10px; /* Abstand nach unten */
-                font-size: 1.5rem; /* Größere Schrift für den Titel */
-                font-weight: bold;
-                cursor: pointer; /* Zeigt an, dass es klickbar ist */
-                transition: color 0.3s ease; /* Sanfter Übergang der Textfarbe beim Hover */
-                padding-left: 5px; /* Etwas Abstand nach links, um den Link korrekt auszurichten */
-            }
-
-            /* Hover-Effekt für den Titel in der Sidebar */
-            .sidebar h2:hover {
-                color: #4CAF50; /* Farbe beim Hover */
-            }
-
-            /* Optional: Verhindert, dass der Link die volle Breite der Sidebar einnimmt */
-            .sidebar a {
-                display: inline-block;
-                width: auto; /* Setzt die Breite des Links auf die Textbreite */
-            }
-
-            .fach {
-                margin-bottom: 10px;
-            }
-
-            .fach-button {
-                background: #4CAF50;
-                color: white;
-                padding: 10px;
-                border: none;
-                width: 100%;
-                text-align: left;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-
-            .fach-content {
-                display: none;
-                padding-left: 20px;
-            }
-
-            .fach-content a {
-                color: black;
-                padding: 10px;
-                display: block;
-                text-decoration: none;
-            }
-
-            .fach-content a:hover {
-                background-color: #cccccc;
-            }
-
-            /* Main Bereich */
-            main {
-                flex: 1;
-                margin-left: 250px; /* Sidebar Platz */
-                padding: 20px;
-                margin-top: 60px; /* Abstand nach dem Header */
-                overflow-y: auto;
-                position: relative; /* Verhindert, dass der Main-Bereich hinter die Sidebar verschwindet */
-            }
-
             footer {
-                background-color: #333;
-                color: white;
-                text-align: center;
-                padding: 10px 20px;
-                position: relative;
                 width: calc(100% - 250px); /* Breite der Sidebar abziehen */
                 left: 250px; /* Footer beginnt nach der Sidebar */
-                display: flex;
-                justify-content: center; /* Zentriert den Text im Footer */
             }
 
+
+            /*Buttons*/
+            /*Hertunterladen Buttons*/
+            .download-btn {
+                margin-left: 10px;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .download-btn:hover {
+                background-color: #0056b3;
+            }
+
+            /*Löschen Buttons*/
+            .delete-btn {
+                margin-left: 10px;
+                padding: 10px 20px;
+                background-color: hsl(4, 90%, 58%);
+                color: white;
+                border: none;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .delete-btn:hover {
+                background-color: hsl(4, 90%, 43%);
+            }
+
+            /* Feedback Button */
+            .save-btn {
+                background-color: #28a745;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+            .save-btn:hover {
+                background-color: #218838;
+            }
 
 
             /* Allgemeine Stile für die Felder */
@@ -201,36 +92,37 @@
                 margin-bottom: 10px;
             }
 
-            /* Unterlagen - Dokumente */
-            #documents-list ul {
+
+            /* Auflistungen der Dateien */
+            /* Liste */
+            #documents-list ul, #submissions-list ul {
                 list-style-type: none;
                 padding-left: 0;
             }
-
-            #documents-list li {
+            #documents-list li, #submissions-list li {
                 margin-bottom: 10px;
             }
-
-            #documents-list a {
+            #documents-list a, #submissions-list a {
                 text-decoration: none;
                 color: #007bff;
             }
-
-            #documents-list button {
-                margin-top: 10px;
-                background-color: #007bff;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
+            
+            /* Listenelemente */
+            .document-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+            }
+            .document-item a {
+                text-decoration: none;
+                color: #007bff;
+                flex-grow: 1;
             }
 
-            #documents-list button:hover {
-                background-color: #0056b3;
-            }
 
-            /* Drag & Drop Area */
+            /*Abgaben*/
             .drag-drop-area {
                 width: 100%;
                 height: 150px;
@@ -243,23 +135,8 @@
                 margin-bottom: 20px;
             }
 
-            /* Abgaben (Dateien) */
-            .submission {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
 
-            .submission button, .submission a {
-                margin-left: 10px;
-            }
-
-            #correction-container button {
-                float: right; /* Schiebt den Button nach rechts */
-                margin-left: 20px; /* Optional: Abstand zwischen Link und Button */
-            }
-
-
+            /*Feedback*/
             textarea {
                 width: 100%;
                 height: 150px;
@@ -268,50 +145,6 @@
                 font-size: 1rem;
                 border: 1px solid #ddd;
                 border-radius: 5px;
-            }
-
-            /* Feedback Button */
-            button {
-                background-color: #28a745;
-                color: white;
-                padding: 10px 20px;
-                border: none;
-                cursor: pointer;
-                border-radius: 5px;
-            }
-
-            button:hover {
-                background-color: #218838;
-            }
-
-            /* Sicherstellen, dass der Main-Inhalt bis zum Mascot-Bild reicht */
-            main {
-                flex: 1;
-                margin-left: 250px; /* Sidebar Platz */
-                margin-right: 300px; /* Abstand bis zum Mascot */
-                padding: 20px;
-                margin-top: 60px; /* Abstand nach dem Header */
-                overflow-y: auto;
-                position: relative; /* Verhindert, dass der Main-Bereich hinter die Sidebar verschwindet */
-            }
-
-            /* Styling für den Mascot-Bereich */
-            .mascot-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 300px;
-                height: 400px;
-                padding: 20px;
-                position: fixed; /* Fixiert den Container */
-                right: 0; /* Positioniert den Container an der rechten Seite */
-                top: 50%; /* Vertikale Zentrierung */
-                transform: translateY(-50%); /* Exakte mittige Ausrichtung */
-            }
-
-            .mascot-container img {
-                max-width: 100%; /* Bild wird auf die maximale Breite des Containers angepasst */
-                height: auto; /* Höhe bleibt im Verhältnis zur Breite */
             }
         </style>
     </head>
@@ -324,7 +157,9 @@
                 </a>
                 <h1>Main</h1>
             </div>
-            <button class="logout-button" onclick="logout()">Logout</button>
+            <div class="button-group">
+                <button class="logout-button" onclick="logout()">Logout</button>
+            </div>
         </header>
 
         <!-- Sidebar -->
@@ -351,7 +186,7 @@
                         <li><a href="Weihnachtsbaum.pdf" target="_blank">Document 1</a></li>
                         <li><a href="#" download="document2.pdf">Document 2</a></li>
                     </ul>
-                    <button id="downloadAll">Alle herunterladen</button>
+                    <button class="download-btn" id="downloadAll">Alle herunterladen</button>
                 </div>
             </div>
 
@@ -378,17 +213,8 @@
             <div class="field">
                 <h2>Feedback</h2>
                 <textarea id="feedback-text" placeholder="Gib hier dein Feedback ein..."></textarea>
-                <button onclick="saveFeedback()">Speichern</button>
+                <button class="save-btn" onclick="saveFeedback()">Speichern</button>
             </div>
-
-            <p>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-                a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-                a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-                a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-                a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-                a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-                a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>
-                a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br></p>
         </main>
 
         <!-- Footer -->
@@ -400,8 +226,9 @@
         <script src="js/logout.js"></script>
         <script src="js/redirectToMainPage.js"></script>
         <script src="js/loadLoginData.js"></script>
+        <script src="js/loadSidebar.js"></script>
         <script>
-            // Die Daten für Fächer und Aufgaben
+            // Die Daten für Fächer und Aufgabendata.subjects.subjectName.assignmentName.users.
             const data = {
                 "subjects": [
                     {
@@ -439,6 +266,7 @@
                     }
                 ]
             };
+            let userdata = 0;
 
             // Funktion zum Extrahieren von URL-Parametern
             function getUrlParameter(name) {
@@ -446,13 +274,154 @@
                 return urlParams.get(name);
             }
 
-            /*document.getElementById("downloadLink").addEventListener("click", function(event) {
-                event.preventDefault(); // Verhindert das Standardverhalten
-                const link = document.createElement('a');
-                link.href = 'Weihnachtsbaum.zip';  // Der Pfad zur Datei
-                link.download = 'Weihnachtsbaum.zip';  // Der Name der Datei beim Download
-                link.click();  // Simuliert den Klick, um den Download zu starten
-            });*/
+            function displayAssignmentDetails(subjectName, assignmentName, assignments) {
+                // Dokumente der Studenten anzeigen
+                const documentsList = document.getElementById('documents-list');
+                documentsList.innerHTML = ''; // Clear previous list
+
+                // Dokumente laden
+                assignments['documents-student'].forEach(doc => {
+                    const fileElement = document.createElement('li');
+                    fileElement.classList.add('document-item');
+                    fileElement.innerHTML = `
+                        <a href="./documents/${subjectName}/${assignmentName}/${doc}" target="_blank"><span>${doc}</span></a>
+                        <div class="button-group">
+                            <a href="${URL.createObjectURL(new Blob([doc]))}" download="${doc}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                        </div>
+                    `;
+                    documentsList.appendChild(fileElement);
+                });
+
+                // Erstelle ein Array mit allen Files zum herunterladen
+                const files = assignments['documents-student'].map(doc => ({
+                    name: doc,
+                    path: `./documents/${subjectName}/${assignmentName}/${doc}`
+                }));
+
+
+                // Alle herunterladen Button hinzufügen
+                const downloadButton = document.createElement('button');
+                downloadButton.classList.add('download-btn');
+                downloadButton.textContent = 'Alle herunterladen';
+                downloadButton.onclick = () => {downloadAllFiles(files)};
+                documentsList.appendChild(downloadButton); // Button hinzufügen
+
+                // Abgaben des aktuellen Benutzers anzeigen
+                const username = sessionStorage.getItem("username");
+                const submissionsList = document.getElementById('submissions-list');
+                
+                submissionsList.innerHTML = ''; // Clear previous submissions
+                
+                if (userdata) {
+                    userdata.submissions.forEach(file => {
+                        const fileElement = document.createElement('div');
+                        fileElement.classList.add('submission');
+                        fileElement.innerHTML = `
+                            <li class="document-item">
+                                <a href="./documents/${subjectName}/${assignmentName}/${userdata.username}/${file}" target="_blank"><span>${file}</span></a>
+                                <div class="button-group">
+                                    <a href="${URL.createObjectURL(new Blob([file]))}" download="${file}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                                    <button class="delete-btn" onclick="deleteFile(this)"><i class="fa fa-trash-o" style="font-size:18px"></i></button>
+                                </div>
+                            </li>
+                        `;
+                        submissionsList.appendChild(fileElement);
+                    });
+                }
+
+                // Korrektur anzeigen
+                const correctionLink = document.getElementById('correction-link');
+                const correctionContainer = document.getElementById('correction-container');
+                if (userdata && userdata.correction) {
+                    const correctionFileName = userdata.correction;
+
+                    // Den Link zur Korrektur anzeigen
+                    correctionContainer.innerHTML = `
+                        <li class="document-item">
+                            <a href="./documents/${subjectName}/${assignmentName}/${username}/${correctionFileName}" target="_blank"><span>${correctionFileName}</span></a>
+                            <div class="button-group">
+                                <a href="${URL.createObjectURL(new Blob([userdata.correction]))}" download="${userdata.correction}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                            </div>
+                        </li>
+                    `;
+                } else {
+                    // Wenn keine Korrektur vorhanden ist
+                    correctionContainer.innerHTML = `<p>Keine Korrektur vorhanden.</p>`;
+                }
+
+                // Feedback anzeigen
+                const feedbackText = document.getElementById('feedback-text');
+                if (userdata && userdata.feedback) {
+                    feedbackText.value = userdata.feedback;
+                } else {
+                    feedbackText.value = ""; // Leere das Textfeld, wenn kein Feedback vorhanden ist
+                }
+            }
+
+            function downloadAllFiles(files) {
+                // Funktion zum Herunterladen aller Dokumente implementieren
+                const zip = new JSZip();
+
+                // Füge die Dateien zum ZIP hinzu
+                files.forEach(file => {
+                    zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
+                });
+
+                // Generiere die ZIP-Datei
+                zip.generateAsync({ type: "blob" }).then(function(content) {
+                    // Erstelle ein Download-Link mit Blob-URL
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(content);
+                    link.download = "alle_dateien.zip"; // Name der heruntergeladenen ZIP-Datei
+                    link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
+                });
+            }
+
+            // Funktion zum Umschalten der Dropdown-Ansicht für Aufgaben
+            function toggleDropdown(id) {
+                const content = document.getElementById(id);
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            }
+
+            // Wenn die Seite geladen ist, die Fächer und Aufgaben laden und die URL-Parameter lesen
+            document.addEventListener('DOMContentLoaded', () => {
+                // Fach und Assignment aus Url lesen
+                const subjectName = getUrlParameter('subject');
+                const assignmentName = getUrlParameter('assignment');
+                const userName = sessionStorage.getItem("username");
+
+                // Fach in data suchen
+                const subject = data.subjects.find(sub => sub.name === subjectName);
+                if (!subject) {
+                    console.error(`Fach ${subjectName} nicht gefunden`);
+                    return;
+                }
+
+                // Aufgabe in data suchen
+                const assignments = subject.assignments.find(assign => assign.name === assignmentName);
+                if (!assignments) {
+                    console.error(`Aufgabe ${assignmentName} nicht gefunden`);
+                    return;
+                }
+
+                // Benutzer in data suchen
+                userdata = assignments.users.find(usr => usr.username === userName);
+                if (!userdata) {
+                    console.error(`Benutzerdaten nicht gefunden`);
+                    return;
+                }
+
+                // Den Titel im Main-Bereich setzen
+                if (subjectName && assignmentName) {
+                    const pageTitle = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ");
+                    document.getElementById('pageTitle').textContent = pageTitle;
+                }
+
+                // Lade die Fächer und Aufgaben
+                loadSidebar();
+
+                displayAssignmentDetails(subjectName, assignmentName, assignments);
+            });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
             document.getElementById('downloadAll').addEventListener('click', function() {
@@ -474,170 +443,6 @@
                     });
             });
 
-            // Funktion, um die Fächer und Aufgaben in die Sidebar zu laden
-            function loadSubjects() {
-                const fachList = document.getElementById('fachList');
-                
-                data.subjects.forEach((subject, index) => {
-                    // Fach-Div erstellen
-                    const fachDiv = document.createElement('div');
-                    fachDiv.classList.add('fach');
-                    
-                    // Fach Button erstellen
-                    const fachButton = document.createElement('button');
-                    fachButton.classList.add('fach-button');
-                    fachButton.textContent = subject.name;
-                    fachButton.onclick = () => toggleDropdown(`fach-content-${index}`);
-                    
-                    // Fach Inhalt (Assignments) erstellen
-                    const fachContentDiv = document.createElement('div');
-                    fachContentDiv.id = `fach-content-${index}`;
-                    fachContentDiv.classList.add('fach-content');
-                    
-                    // Assignments hinzufügen
-                    subject.assignments.forEach(assignment => {
-                        const assignmentLink = document.createElement('a');
-                        assignmentLink.href = `assignment-student.html?subject=${subject.name}&assignment=${assignment.name}`;
-                        assignmentLink.textContent = assignment.name;
-                        fachContentDiv.appendChild(assignmentLink);
-                    });
-                    
-                    // Fach Button und Inhalt hinzufügen
-                    fachDiv.appendChild(fachButton);
-                    fachDiv.appendChild(fachContentDiv);
-                    
-                    // Fach zum Fachlist-Container hinzufügen
-                    fachList.appendChild(fachDiv);
-                });
-            }
-
-            function displayAssignmentDetails(subjectName, assignmentName) {
-                const subject = data.subjects.find(sub => sub.name === subjectName); // Fach suchen
-                if (!subject) {
-                    console.error(`Fach ${subjectName} nicht gefunden`);
-                    return;
-                }
-
-                const assignment = subject.assignments.find(assign => assign.name === assignmentName); // Aufgabe suchen
-                if (!assignment) {
-                    console.error(`Aufgabe ${assignmentName} nicht gefunden`);
-                    return;
-                }
-
-                // Dokumente der Studenten anzeigen
-                const documentsList = document.getElementById('documents-list');
-                documentsList.innerHTML = ''; // Clear previous list
-
-                // Dokumente laden
-                assignment['documents-student'].forEach(doc => {
-                    const documentItem = document.createElement('li');
-                    const documentLink = document.createElement('a');
-                    documentLink.href = `./documents/${subjectName}/${assignmentName}/${doc}`;
-                    documentLink.target = '_blank';
-                    documentLink.textContent = doc;
-                    documentItem.appendChild(documentLink);
-                    documentsList.appendChild(documentItem);
-                });
-
-                // Alle herunterladen Button hinzufügen
-                const downloadButton = document.createElement('button');
-                downloadButton.textContent = 'Alle herunterladen';
-                downloadButton.onclick = function() {
-                    // Funktion zum Herunterladen aller Dokumente implementieren
-                    const zip = new JSZip();
-                    
-                    const files = assignment['documents-student'].map(doc => ({
-                        name: doc,
-                        path: `./documents/${subjectName}/${assignmentName}/${doc}`
-                    }));
-
-
-                    // Füge die Dateien zum ZIP hinzu
-                    files.forEach(file => {
-                        zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
-                    });
-
-                    // Generiere die ZIP-Datei
-                    zip.generateAsync({ type: "blob" })
-                        .then(function(content) {
-                            // Erstelle ein Download-Link mit Blob-URL
-                            const link = document.createElement("a");
-                            link.href = URL.createObjectURL(content);
-                            link.download = "alle_dateien.zip"; // Name der heruntergeladenen ZIP-Datei
-                            link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
-                        });
-                };
-                documentsList.appendChild(downloadButton); // Button hinzufügen
-
-                // Abgaben des aktuellen Benutzers anzeigen
-                const username = sessionStorage.getItem("username");
-                console.log(username);
-                console.log(assignment);
-                const user = assignment.users.find(usr => usr.username === username); // Benutzer finden
-
-                const submissionsList = document.getElementById('submissions-list');
-                submissionsList.innerHTML = ''; // Clear previous submissions
-                console.log(user);
-                if (user) {
-                    user.submissions.forEach(file => {
-                        const fileElement = document.createElement('div');
-                        fileElement.classList.add('submission');
-                        fileElement.innerHTML = `
-                            <a href="${URL.createObjectURL(new Blob([file]))}" download="${file}"><span>${file}</span></a>
-                            <button onclick="deleteFile(this)">Löschen</button>
-                        `;
-                        submissionsList.appendChild(fileElement);
-                    });
-                }
-
-                // Korrektur anzeigen<i class="fa fa-download"></i>
-                const correctionLink = document.getElementById('correction-link');
-                const correctionContainer = document.getElementById('correction-container');
-                if (user && user.correction) {
-                    const correctionFileName = user.correction;
-
-                    // Den Link zur Korrektur anzeigen
-                    correctionContainer.innerHTML = `
-                        <a href="./documents/${subjectName}/${assignmentName}/${username}/${correctionFileName}" target="_blank"><span>${correctionFileName}</span></a>
-                        <a href="${URL.createObjectURL(new Blob([user.correction]))}" download="${user.correction}"><button>Herunterladen</button></a>
-                    `;//<a href="${URL.createObjectURL(new Blob([user.correction]))}" download="${user.correction}"></a>
-                } else {
-                    // Wenn keine Korrektur vorhanden ist
-                    correctionContainer.innerHTML = `<p>Keine Korrektur vorhanden.</p>`;
-                }
-
-                // Feedback anzeigen
-                const feedbackText = document.getElementById('feedback-text');
-                if (user && user.feedback) {
-                    feedbackText.value = user.feedback;
-                } else {
-                    feedbackText.value = ''; // Leere das Textfeld, wenn kein Feedback vorhanden ist
-                }
-            }
-
-            // Funktion zum Umschalten der Dropdown-Ansicht für Aufgaben
-            function toggleDropdown(id) {
-                const content = document.getElementById(id);
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            }
-
-            // Wenn die Seite geladen ist, die Fächer und Aufgaben laden und die URL-Parameter lesen
-            document.addEventListener('DOMContentLoaded', () => {
-                // Lade die Fächer und Aufgaben
-                loadSubjects();
-                
-                const subject = getUrlParameter('subject');
-                const assignment = getUrlParameter('assignment');
-
-                // Den Titel im Main-Bereich setzen
-                if (subject && assignment) {
-                    const pageTitle = subject + ' - ' + assignment;
-                    document.getElementById('pageTitle').textContent = pageTitle;
-                }
-
-                displayAssignmentDetails(subject, assignment);
-            });
-
             // Drag & Drop für das Hochladen von Dateien
             const dropArea = document.getElementById('drag-drop-area');
             dropArea.addEventListener('dragover', (e) => {
@@ -653,26 +458,35 @@
                 e.preventDefault();
                 dropArea.style.backgroundColor = ''; // Rückgängig machen der Hintergrundfarbe
                 const files = e.dataTransfer.files;
+                console.log(files);
                 uploadFiles(files);
             });
 
             function uploadFiles(files) {
                 const submissionList = document.getElementById('submissions-list');
+                const subjectName = getUrlParameter('subject');
+                const assignmentName = getUrlParameter('assignment');
+                const username = sessionStorage.getItem("username");
+
                 for (let i = 0; i < files.length; i++) {
                     const file = files[i];
                     const fileElement = document.createElement('div');
                     fileElement.classList.add('submission');
                     fileElement.innerHTML = `
-                        <span>${file.name}</span>
-                        <button onclick="deleteFile(this)">Löschen</button>
-                        <a href="${URL.createObjectURL(file)}" download="${file.name}">Herunterladen</a>
+                        <li class="document-item">
+                            <a href="./documents/${subjectName}/${assignmentName}/${username}/${file.name}" target="_blank"><span>${file.name}</span></a>
+                            <div class="button-group">
+                                <a href="${URL.createObjectURL(new Blob([file]))}" download="${file.name}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                                <button class="delete-btn" onclick="deleteFile(this)"><i class="fa fa-trash-o" style="font-size:18px"></i></button>
+                            </div>
+                        </li>
                     `;
                     submissionList.appendChild(fileElement);
                 }
             }
 
             function deleteFile(button) {
-                const fileElement = button.parentElement;
+                const fileElement = button.parentElement.parentElement;
                 fileElement.remove();
             }
 
@@ -681,7 +495,7 @@
                 const feedback = document.getElementById('feedback-text').value;
                 if (feedback) {
                     alert('Feedback gespeichert: ' + feedback);
-                    // Hier kann der Feedback-Inhalt gespeichert oder an den Server gesendet werden
+                    userdata.feedback = feedback;
                 } else {
                     alert('Bitte gib Feedback ein!');
                 }
