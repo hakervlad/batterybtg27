@@ -98,27 +98,19 @@
                 <!-- Fach 1 -->
                 <div class="fach">
                     <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Prog</button>
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Programmieren 1</button>
                     
                     <!-- Dropdown Inhalt -->
-                    <div id="fach-content-1" class="fach-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                    </div>
+                    <div id="fach-content-1" class="fach-content"></div>
                 </div>
 
                 <!-- Fach 2 -->
                 <div class="fach">
                     <!-- Dropdown Button -->
-                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">DuA</button>
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">Datenstrukturen und Algorithmen</button>
                     
                     <!-- Dropdown Inhalt -->
-                    <div id="fach-content-2" class="fach-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                    </div>
+                    <div id="fach-content-2" class="fach-content"></div>
                 </div>
             </div>
 
@@ -137,8 +129,56 @@
         <script src="js/redirectToMainPage.js"></script>
         <script src="js/loadLoginData.js"></script>
         <script>
+            //Erstellt das Auswahlmenue
+            function loadData(id) {
+                // Die Daten für Fächer und Aufgaben
+                const data = {
+                    "subjects": [
+                        {
+                            "name": "Programmieren_I", 
+                            "assignments": [
+                                {"name": "Assignment_01"},
+                                {"name": "Assignment_02"},
+                                {"name": "Assignment_03"},
+                                {"name": "Assignment_04"},
+                                {"name": "Assignment_05"},
+                                {"name": "Assignment_06"}
+                            ]
+                        },
+                        {
+                            "name": "Datenstrukturen_und_Algorithmen", 
+                            "assignments": [
+                                {"name": "Assignment_01"},
+                                {"name": "Assignment_02"},
+                                {"name": "Assignment_03"}
+                            ]
+                        }
+                    ]
+                };
+
+                //Feststellen des Fachs
+                var i = 0;
+                if (id != "fach-content-1") var i = 1;
+                const fach = document.getElementById(id);
+
+                //Löschen von zuvor erstellten Listen
+                while (fach.firstChild) {
+                    fach.removeChild(fach.firstChild);
+                }
+
+                //Erstellt die Liste der Assignments
+                data.subjects[i].assignments.forEach(assignment => {
+                    const assign = document.createElement('a');
+                    assign.href =  'assignment-tutor.html?subject=' + data.subjects[i].name + '&assignment=' + assignment.name;
+                    assign.textContent = assignment.name.replaceAll('_', ' ');
+                    fach.appendChild(assign);
+                })
+            }
+
             // Funktion zum Umschalten der Sichtbarkeit eines Dropdown-Menüs
             function toggleDropdown(id) {
+                //Erstellt den Inhalt
+                loadData(id);
                 // Holen des Dropdown-Elements anhand der übergebenen ID
                 document.getElementById(id).classList.toggle("show");
                 // Mit classList.toggle wird die Klasse "show" hinzugefügt oder entfernt, je nachdem, ob sie bereits vorhanden ist, wodurch das Dropdown sichtbar oder unsichtbar gemacht wird
