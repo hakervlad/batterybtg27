@@ -4,11 +4,7 @@
     <!-- Meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Titel -->
-    <title>Login Seite</title>
-
-    <!-- CSS -->
+    <title>Login</title>
     <style>
         * {
             margin: 0;
@@ -43,20 +39,15 @@
             align-items: center;
             background-color: #f4f4f9;
             padding: 20px;
+            gap: 20px;
         }
 
         .login-container {
-            background: white;
+            width: 300px;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-container h2 {
-            margin-bottom: 20px;
-            text-align: center;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
@@ -70,28 +61,66 @@
 
         .form-group input {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #007BFF;
+            border-radius: 4px;
         }
 
         .login-btn {
             width: 100%;
             padding: 10px;
-            background-color: #007BFF;
+            background-color: #333;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
         }
 
         .login-btn:hover {
-            background-color: #0056b3;
+            background-color: #555;
+        }
+
+        .mascot-container {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .mascot-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .speech-bubble {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            padding: 10px;
+            background: #f1f1f1;
+            border: 2px solid #000;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-bottom-color: #f1f1f1;
+            border-top: 0;
+            border-right: 0;
+            margin-right: -5px;
+            margin-top: -10px;
         }
 
         footer {
@@ -102,7 +131,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="initializeText()">
     <header>
         <!-- Logo mit Link -->
         <a href="index.html">
@@ -136,6 +165,12 @@
                 <button type="button" class="login-btn" onclick="handleLogin()">Login</button>
             </form>
         </div>
+        <div class="mascot-container">
+            <img src="textures/battery1.png" alt="Mascot">
+        </div>
+        <div class="speech-bubble" id="speech-bubble">
+            <p id="speech-text">Gib dein Name und Passwort ein</p>
+        </div>
     </main>
     <footer>
         <!-- Text im Footer -->
@@ -150,6 +185,10 @@
                 {"username":"till", "password":"till", "role":"student", "subjects":["Programmieren_I", "Datenstrukturen_und_Algorithmen"]},
                 {"username":"tim", "password":"abc123", "role":"tutor", "subjects":["Programmieren_I", "Datenstrukturen_und_Algorithmen"]}
             ]
+        }
+
+        function initializeText() {
+            document.getElementById('speech-text').textContent = "Gib dein Name und Passwort ein";
         }
 
         function handleLogin() {
@@ -175,7 +214,7 @@
                     alert(`Das Passwort ist ungültig!`);
                 }
             } else {
-                alert('Der Benutzername ist ungültig!');
+                document.getElementById('speech-text').textContent = "Der Benutzername ist ungültig!";
             }
         }
     </script>

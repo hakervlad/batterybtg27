@@ -146,6 +146,34 @@
                 border: 1px solid #ddd;
                 border-radius: 5px;
             }
+
+            .speech-bubble {
+                position: fixed;
+                top: 150px;
+                right: 20px;
+                width: 300px;
+                padding: 10px;
+                background: #f1f1f1;
+                border: 2px solid #000;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .speech-bubble:after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                right: 20px;
+                width: 0;
+                height: 0;
+                border: 10px solid transparent;
+                border-bottom-color: #f1f1f1;
+                border-top: 0;
+                border-right: 0;
+                margin-right: -5px;
+                margin-top: -10px;
+            }
         </style>
     </head>
     <body>
@@ -214,6 +242,10 @@
                 <h2>Feedback</h2>
                 <textarea id="feedback-text" placeholder="Gib hier dein Feedback ein..."></textarea>
                 <button class="save-btn" onclick="saveFeedback()">Speichern</button>
+            </div>
+
+            <div class="speech-bubble" id="speech-bubble">
+                <p id="speech-text">Du kannst deine Hausaufgaben runterladen als auch die drag und dropen in das spezifischen feld um die bearbeitete Dateien hochzuladen</p>
             </div>
         </main>
 
@@ -499,6 +531,16 @@
                 } else {
                     alert('Bitte gib Feedback ein!');
                 }
+            }
+
+            function handleDragOver(event) {
+                event.preventDefault();
+            }
+
+            function handleDrop(event) {
+                event.preventDefault();
+                // Handle file upload logic here
+                document.getElementById('speech-text').textContent = "Abgabe abgeschlossen. Warte auf die Korrektur :>";
             }
         </script>
     </body>
