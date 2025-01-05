@@ -223,7 +223,8 @@
             <!-- Feedback Feld -->
             <div class="field">
                 <h2>Feedback</h2> <!-- TODO -->
-                <textfield>Potenzielles Feedback</textfield>
+                <textarea id="feedback-text"></textarea>
+                <button class="save-btn" onclick="saveFeddback()">Speichern</button>
             </div>
         </main>
 
@@ -347,6 +348,10 @@
                 loadSidebar();
 
                 displayAssignmentDetails(subjectName, assignmentName, assignments);
+
+                if(userdata.feedback){
+                    document.getElementById('feedback-text').value = userdata.feedback;
+                }
             });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
@@ -425,6 +430,18 @@
                     alert("Ungültige Punktzahl!");
                 }
             }
+
+            // Feedback speichern
+            function saveFeddback() {
+                const feedback = document.getElementById('feedback-text').value;
+                if(feedback) {
+                    alert("Feedback gespeichert!");
+                } else {
+                    alert("Feedback darf nicht leer sein!");
+                }
+            }
+
+
         </script>
     </body>
 </html>
