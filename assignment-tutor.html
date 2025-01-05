@@ -171,7 +171,7 @@
                 <a href="#" onclick="redirectToMainPage()">
                     <img src="textures/logo-header.png" alt="Logo">
                 </a>
-                <h1>Main</h1>
+                <h1 id="path">Main</h1>
             </div>
             <div class="button-group">
                 <button class="logout-button" onclick="logout()">Logout</button>
@@ -412,6 +412,8 @@
                 if (subjectName && assignmentName) {
                     document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ") + ' - ' + studentName;
                 }
+
+                document.getElementById('path').textContent += ' ->' + subjectName.replaceAll("_", " ") + ' ->' + assignmentName.replaceAll("_", " ") + ' ->' + studentName;
 
                 document.getElementById('student-list').textContent = subjectName.replaceAll("_", " ") + '\n' + assignmentName.replaceAll("_", " ");
 
