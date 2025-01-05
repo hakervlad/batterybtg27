@@ -299,7 +299,7 @@
                     {
                         "name": "Datenstrukturen_und_Algorithmen",
                         "assignments": [
-                            {"name": "Assignment_01", "link":"./documents/DuA/A1/",
+                            {"name": "Assignment_01", "link":"./documents/Datenstrukturen_und_Algorithmen/Assignment_01/",
                             "documents-student":[
                                 "Nichts.txt"
                             ], "documents-tutor":[
@@ -421,7 +421,7 @@
                 }
 
                 const submissionsList = document.querySelector('.field #documents-list ul');
-                submissionsList.innerHTML = ''; // Clear existing submissions
+                submissionsList.innerHTML = '';
                 studentData.submissions.forEach(submission => {
                     const listItem = document.createElement('li');
                     const link = document.createElement('a');
@@ -430,6 +430,19 @@
                     listItem.appendChild(link);
                     submissionsList.appendChild(listItem);
                 });
+
+                const documentsList = document.querySelector('.field-documents #documents-list ul');
+                documentsList.innerHTML = '';
+                const documents = assignments['documents-tutor'];
+                documents.forEach(doc => {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `./documents/${subjectName}/${assignmentName}/documents/${doc}`;
+                    link.textContent = doc;
+                    listItem.appendChild(link);
+                    documentsList.appendChild(listItem);
+                });
+
             });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
