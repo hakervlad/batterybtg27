@@ -199,8 +199,6 @@
                 <h2>Unterlagen</h2>
                 <div id="documents-list">
                     <ul>
-                        <li><a href="./documents/Programmieren_I/Assignment_01/Aufgabenstellung.txt">Aufgabenstellung.txt</a></li>
-                        <li><a href="./documents/Programmieren_I/Assignment_01/Korrekturhinweise.txt">Korrekturhinweise.txt</a></li>
                     </ul>
                     <button class="download-btn" id="downloadAllDocuments">Alle herunterladen</button>
                 </div>
@@ -211,9 +209,6 @@
                 <h2>Abgabe</h2>
                 <div id="documents-list">
                     <ul>
-                        <li><a href="./documents/Programmieren_I/Assignment_01/till/Antworten.txt">Antworten.txt</a></li>
-                        <li><a href="./documents/Programmieren_I/Assignment_01/till/Weihnachtsbaum.jpg">Weihnachtsbaum.jpg</a></li>
-                        <li><a href="./documents/Programmieren_I/Assignment_01/till/Weihnachtsbaum.pdf">Weihnachtsbaum.pdf</a></li>
                     </ul>
                     <button class="download-btn" id="downloadAllSubmissions">Alle herunterladen</button>
                 </div>
@@ -276,13 +271,17 @@
                                     "Antworten.txt",
                                     "Weihnachtsbaum.jpg",
                                     "Weihnachtsbaum.pdf"
-                                ], "correction":"Korrektur.txt", "points":"", "feedback":""},
+                                ], "correction":"Korrektur.txt", "points":"15", "feedback":"Hier ist Feedback"},
                                     {
                                         "username":"vlad",
                                         "role": "student",
                                         "submissions":[
                                         ], "correction":"", "points":"", "feedback":""},
-
+                                    {
+                                        "username":"johann",
+                                        "role": "student",
+                                        "submissions":[
+                                        ], "correction":"", "points":"", "feedback":""},
                                     {
                                         "username": "tim",
                                         "role": "tutor",
@@ -312,6 +311,16 @@
                                     "submissions":[
                                     "Nichts.txt"
                                 ], "correction":"", "points":"", "feedback":""},
+                                    {
+                                        "username":"vlad",
+                                        "role": "student",
+                                        "submissions":[
+                                        ], "correction":"", "points":"", "feedback":""},
+                                    {
+                                        "username":"johann",
+                                        "role": "student",
+                                        "submissions":[
+                                        ], "correction":"", "points":"", "feedback":""},
 
                                     {
                                         "username": "tim",
@@ -412,7 +421,7 @@
                         const studentButton = document.createElement('button');
                         studentButton.textContent = student;
                         studentButton.classList.add('student-button');
-                        studentButton.addEventListener('click', function() {
+                        studentButton.addEventListener('click', function () {
                             window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${student}`;
                         });
                         studentList.appendChild(studentButton);
@@ -443,6 +452,13 @@
                     documentsList.appendChild(listItem);
                 });
 
+                const feedbackText = document.getElementById('feedback-text');
+                if (feedbackText)
+                    feedbackText.innerText = studentData.feedback;
+
+                const points = document.getElementById('points');
+                if (studentData.points)
+                    points.value = studentData.points;
             });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
