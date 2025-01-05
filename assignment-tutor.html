@@ -223,9 +223,7 @@
             <!-- Feedback Feld -->
             <div class="field">
                 <h2>Feedback</h2> <!-- TODO -->
-                <textarea id="feedback-text"></textarea>
-                <button class="save-btn" onclick="saveFeddback()">Speichern</button>
-            </div>
+                <textfield id="feedback-text"></textfield>
         </main>
 
         <!-- Footer -->
@@ -254,11 +252,20 @@
                                 "Korrekturhinweise.txt", 
                                 "Musterloesung.txt"
                             ], "users":[
-                                {"username":"till", "submissions":[
+                                {
+                                    "username":"till",
+                                    "role": "student",
+                                    "submissions":[
                                     "Antworten.txt",
                                     "Weihnachtsbaum.jpg",
                                     "Weihnachtsbaum.pdf"
-                                ], "correction":"Korrektur.txt", "points":"", "feedback":""}
+                                ], "correction":"Korrektur.txt", "points":"", "feedback":""},
+
+                                    {
+                                        "username": "tim",
+                                        "role": "tutor",
+                                        "students": ["till"]
+                                    }
                             ]},
                             {"name": "Assignment_02"},
                             {"name": "Assignment_03"},
@@ -340,8 +347,7 @@
 
                 // Den Titel im Main-Bereich setzen
                 if (subjectName && assignmentName) {
-                    const pageTitle = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ");
-                    document.getElementById('pageTitle').textContent = pageTitle;
+                    document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ");
                 }
 
                 // Lade die Fächer und Aufgaben
@@ -351,6 +357,19 @@
 
                 if(userdata.feedback){
                     document.getElementById('feedback-text').value = userdata.feedback;
+                }
+
+                if(userdata.role === "tutor"){
+                    const studentList = document.createElement('ul');
+                    userdata.students.forEach(student => {
+                        const studentItem = document.createElement('li');
+                        studentItem.textContent = student;
+                        studentItem.addEventListener('click', function() {
+                            window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${student}`;
+                        });
+                        studentList.appendChild(studentItem);
+                    });
+                    document.querySelector('.sidebar').appendChild(studentList);
                 }
             });
 
@@ -430,17 +449,6 @@
                     alert("Ungültige Punktzahl!");
                 }
             }
-
-            // Feedback speichern
-            function saveFeddback() {
-                const feedback = document.getElementById('feedback-text').value;
-                if(feedback) {
-                    alert("Feedback gespeichert!");
-                } else {
-                    alert("Feedback darf nicht leer sein!");
-                }
-            }
-
 
         </script>
     </body>
