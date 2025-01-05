@@ -4,7 +4,7 @@
         <!-- Meta -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         <!-- Titel -->
         <title>Main</title>
 
@@ -79,7 +79,7 @@
 
 
             /* Allgemeine Stile für die Felder */
-            .field {
+            .field, .field-documents {
                 margin-top: 20px;
                 padding: 20px;
                 background-color: #f9f9f9;
@@ -88,7 +88,7 @@
                 max-width: calc(100% - 350px); /* Maximal die Breite bis zum Mascot-Bild */
             }
 
-            .field h2 {
+            .field h2, .field-documents h2 {
                 margin-bottom: 10px;
             }
 
@@ -106,7 +106,7 @@
                 text-decoration: none;
                 color: #007bff;
             }
-            
+
             /* Listenelemente */
             .document-item {
                 display: flex;
@@ -179,26 +179,27 @@
             </div>
 
             <!-- Unterlagen Feld -->
-            <div class="field">
-                <h2>Unterlagen TODO</h2>
+            <div class="field-documents">
+                <h2>Unterlagen</h2>
                 <div id="documents-list">
                     <ul>
                         <li><a href="./documents/Programmieren_I/Assignment_01/Aufgabenstellung.txt">Aufgabenstellung.txt</a></li>
                         <li><a href="./documents/Programmieren_I/Assignment_01/Korrekturhinweise.txt">Korrekturhinweise.txt</a></li>
                     </ul>
-                    <button class="download-btn" id="downloadAll">Alle herunterladen</button>
+                    <button class="download-btn" id="downloadAllDocuments">Alle herunterladen</button>
                 </div>
             </div>
 
             <!-- Abgabe -->
             <div class="field">
-                <h2>Abgabe TODO</h2>
+                <h2>Abgabe</h2>
                 <div id="documents-list">
                     <ul>
                         <li><a href="./documents/Programmieren_I/Assignment_01/till/Antworten.txt">Antworten.txt</a></li>
                         <li><a href="./documents/Programmieren_I/Assignment_01/till/Weihnachtsbaum.jpg">Weihnachtsbaum.jpg</a></li>
                         <li><a href="./documents/Programmieren_I/Assignment_01/till/Weihnachtsbaum.pdf">Weihnachtsbaum.pdf</a></li>
                     </ul>
+                    <button class="download-btn" id="downloadAllSubmissions">Alle herunterladen</button>
                 </div>
             </div>
 
@@ -241,15 +242,15 @@
             const data = {
                 "subjects": [
                     {
-                        "name": "Programmieren_I", 
+                        "name": "Programmieren_I",
                         "assignments": [
-                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/", 
+                            {"name": "Assignment_01", "link":"./documents/Programmieren_I/Assignment_1/",
                             "documents-student":[
-                                "Aufgabenstellung.txt", 
+                                "Aufgabenstellung.txt",
                                 "Korrekturhinweise.txt"
                             ], "documents-tutor":[
-                                "Aufgabenstellung.txt", 
-                                "Korrekturhinweise.txt", 
+                                "Aufgabenstellung.txt",
+                                "Korrekturhinweise.txt",
                                 "Musterloesung.txt"
                             ], "users":[
                                 {
@@ -275,7 +276,7 @@
                         ]
                     },
                     {
-                        "name": "Datenstrukturen_und_Algorithmen", 
+                        "name": "Datenstrukturen_und_Algorithmen",
                         "assignments": [
                             {"name": "Assignment_01"},
                             {"name": "Assignment_02"},
@@ -374,23 +375,48 @@
             });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
-            document.getElementById('downloadAll').addEventListener('click', function() {
-                const zip = new JSZip();
+            document.querySelectorAll('.download-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const buttonID = this.id;
+                    const files = [];
 
-                // Füge die Dateien zum ZIP hinzu
-                files.forEach(file => {
-                    zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
-                });
+                    let documentLinks;
+                    let filename;
 
-                // Generiere die ZIP-Datei
-                zip.generateAsync({ type: "blob" })
-                    .then(function(content) {
-                        // Erstelle ein Download-Link mit Blob-URL
-                        const link = document.createElement("a");
-                        link.href = URL.createObjectURL(content);
-                        link.download = "alle_dateien.zip"; // Name der heruntergeladenen ZIP-Datei
-                        link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
+                    // Hier wird die spezifische Liste der Dokumente basierend auf der Klasse des Buttons ausgewählt
+                    if(buttonID === 'downloadAllDocuments') {
+                        documentLinks = document.querySelectorAll('.field-documents #documents-list a');
+                        filename= "documents.zip";
+                    }else if(buttonID === 'downloadAllSubmissions'){
+                        documentLinks = document.querySelectorAll('.field #documents-list a');
+                        filename = "submissions.zip";
+                    }
+
+                    documentLinks.forEach(link => {
+                        const file = {
+                            name: link.textContent,
+                            content: link.href
+                        };
+                        files.push(file);
                     });
+
+                    const zip = new JSZip();
+
+                    // Füge die Dateien zum ZIP hinzu
+                    files.forEach(file => {
+                        zip.file(file.name, file.content); // Dateiname und Inhalt hinzufügen
+                    });
+
+                    // Generiere die ZIP-Datei
+                    zip.generateAsync({ type: "blob" })
+                        .then(function(content) {
+                            // Erstelle ein Download-Link mit Blob-URL
+                            const link = document.createElement("a");
+                            link.href = URL.createObjectURL(content);
+                            link.download = filename; // Name der heruntergeladenen ZIP-Datei
+                            link.click(); // Simuliere den Klick auf den Link, um den Download zu starten
+                        });
+                });
             });
 
             // Drag & Drop für das Hochladen von Dateien
