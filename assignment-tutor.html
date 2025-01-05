@@ -146,6 +146,22 @@
                 border: 1px solid #ddd;
                 border-radius: 5px;
             }
+
+            .student-button {
+                background: #4CAF50;
+                color: white;
+                padding: 10px;
+                border: none;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
+
+            .student-button:hover {
+                background-color: #45a049;
+            }
         </style>
     </head>
     <body>
@@ -165,7 +181,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <a href="#" onclick="redirectToMainPage()">
-                <h2>Studenten TODO</h2>
+                <h2 id="student-list">Studenten TODO</h2>
             </a>
             <div id="fachList"></div>
         </div>
@@ -261,11 +277,16 @@
                                     "Weihnachtsbaum.jpg",
                                     "Weihnachtsbaum.pdf"
                                 ], "correction":"Korrektur.txt", "points":"", "feedback":""},
+                                    {
+                                        "username":"vlad",
+                                        "role": "student",
+                                        "submissions":[
+                                        ], "correction":"", "points":"", "feedback":""},
 
                                     {
                                         "username": "tim",
                                         "role": "tutor",
-                                        "students": ["till"]
+                                        "students": ["till", "vlad", "johann"]
                                     }
                             ]},
                             {"name": "Assignment_02"},
@@ -278,7 +299,26 @@
                     {
                         "name": "Datenstrukturen_und_Algorithmen",
                         "assignments": [
-                            {"name": "Assignment_01"},
+                            {"name": "Assignment_01", "link":"./documents/DuA/A1/",
+                            "documents-student":[
+                                "Nichts.txt"
+                            ], "documents-tutor":[
+                               "Musterloesung.txt"
+                                ],
+                            "users":[
+                                {
+                                    "username":"till",
+                                    "role": "student",
+                                    "submissions":[
+                                    "Nichts.txt"
+                                ], "correction":"", "points":"", "feedback":""},
+
+                                    {
+                                        "username": "tim",
+                                        "role": "tutor",
+                                        "students": ["till", "vlad", "johann"]
+                                    }
+                            ]},
                             {"name": "Assignment_02"},
                             {"name": "Assignment_03"}
                         ]
@@ -324,6 +364,7 @@
                 const subjectName = getUrlParameter('subject');
                 const assignmentName = getUrlParameter('assignment');
                 const userName = sessionStorage.getItem("username");
+                let studentName = getUrlParameter('student');
 
                 // Fach in data suchen
                 const subject = data.subjects.find(sub => sub.name === subjectName);
@@ -346,32 +387,49 @@
                     return;
                 }
 
+                if (!studentName && userdata.role === "tutor" && userdata.students.length > 0) {
+                    studentName = userdata.students[0];
+                    window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${studentName}`;
+                    return;
+                }
+
+                const studentData = assignments.users.find(usr => usr.username === studentName);
+                if (!studentData) {
+                    console.error(`Studentendaten nicht gefunden`);
+                    return;
+                }
+
                 // Den Titel im Main-Bereich setzen
                 if (subjectName && assignmentName) {
-                    document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ");
+                    document.getElementById('pageTitle').textContent = subjectName.replaceAll("_", " ") + ' - ' + assignmentName.replaceAll("_", " ") + ' - ' + studentName;
                 }
 
-                // Lade die Fächer und Aufgaben
-                loadSidebar();
+                document.getElementById('student-list').textContent = subjectName.replaceAll("_", " ") + '\n' + assignmentName.replaceAll("_", " ");
 
-                displayAssignmentDetails(subjectName, assignmentName, assignments);
-
-                if(userdata.feedback){
-                    document.getElementById('feedback-text').value = userdata.feedback;
-                }
-
-                if(userdata.role === "tutor"){
-                    const studentList = document.createElement('ul');
+                if (userdata.role === "tutor") {
+                    const studentList = document.createElement('div');
                     userdata.students.forEach(student => {
-                        const studentItem = document.createElement('li');
-                        studentItem.textContent = student;
-                        studentItem.addEventListener('click', function() {
+                        const studentButton = document.createElement('button');
+                        studentButton.textContent = student;
+                        studentButton.classList.add('student-button');
+                        studentButton.addEventListener('click', function() {
                             window.location.href = `assignment-tutor.html?subject=${subjectName}&assignment=${assignmentName}&student=${student}`;
                         });
-                        studentList.appendChild(studentItem);
+                        studentList.appendChild(studentButton);
                     });
                     document.querySelector('.sidebar').appendChild(studentList);
                 }
+
+                const submissionsList = document.querySelector('.field #documents-list ul');
+                submissionsList.innerHTML = ''; // Clear existing submissions
+                studentData.submissions.forEach(submission => {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `./documents/${subjectName}/${assignmentName}/${studentName}/${submission}`;
+                    link.textContent = submission;
+                    listItem.appendChild(link);
+                    submissionsList.appendChild(listItem);
+                });
             });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
