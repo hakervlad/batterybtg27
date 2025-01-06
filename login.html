@@ -14,6 +14,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            gap: 20px;
         }
 
         body {
@@ -94,6 +95,48 @@
             background-color: #0056b3;
         }
 
+        .mascot-container {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .mascot-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .speech-bubble {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            padding: 10px;
+            background: #f1f1f1;
+            border: 2px solid #000;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border: 0 solid transparent;
+            border-bottom: 10px #f1f1f1;
+            border-left-width: 10px;
+            margin-right: -5px;
+            margin-top: -10px;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -102,7 +145,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="initializeText()">
     <header>
         <!-- Logo mit Link -->
         <a href="index.html">
@@ -136,6 +179,14 @@
                 <button type="button" class="login-btn" onclick="handleLogin()">Login</button>
             </form>
         </div>
+        <div>
+            <div class="mascot-container">
+                <img src="textures/battery1.png" alt="Mascot">
+            </div>
+            <div class="speech-bubble" id="speech-bubble">
+                <p id="speech-text">Gib dein Name und Passwort ein</p>
+            </div>
+        </div>
     </main>
     <footer>
         <!-- Text im Footer -->
@@ -152,6 +203,10 @@
             ]
         }
 
+        function initializeText() {
+            document.getElementById('speech-text').textContent = "Gib dein Name und Passwort ein";
+        }
+
         function handleLogin() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -161,6 +216,7 @@
             if (account) {
                 if (account.password === password) {
                     //alert(`Login erfolgreich! Benutzername: ${username}`);
+                    document.getElementById('speech-text').textContent = "Login erfolgreich!";
                     sessionStorage.setItem("username", username);
                     sessionStorage.setItem("role", account.role);
                     sessionStorage.setItem("subjects", account.subjects);
@@ -172,9 +228,11 @@
                     }
                     
                 }else {
+                    document.getElementById('speech-text').textContent = "Das Passwort ist ungültig!";
                     alert(`Das Passwort ist ungültig!`);
                 }
             } else {
+                document.getElementById('speech-text').textContent = "Der Benutzername ist ungültig!";
                 alert('Der Benutzername ist ungültig!');
             }
         }
