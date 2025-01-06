@@ -223,3 +223,263 @@
         </script>
     </body>
 </html>
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <!-- Meta -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Titel -->
+        <title>Main</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+            main {
+                flex: 1;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding: 20px;
+                gap: 20px;
+            }
+            .mascot-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 300px;
+                height: 400px;
+                padding: 20px;
+            }
+            .mascot-container img {
+                max-width: 100%;
+                height: auto;
+            }
+            .fach-container {
+                width: 1400px;
+                min-height: 600px;
+                height: auto;
+                border: 1px solid #ccc;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                overflow-y: auto;
+            }
+            .fach {
+                position: relative;
+                width: 100%;
+                display: block;
+            }
+            .fach-content {
+                display: none;
+                position: relative;
+                top: 100%;
+                left: 0;
+                background-color: #e7e7ec;
+                min-width: 160px;
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                padding: 10px;
+                margin-top: 10px;
+                z-index: 1;
+            }
+            .fach-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                border-bottom: 1px solid #ddd;
+            }
+            .fach-content a:hover {
+                background-color: #ddd;
+            }
+            .show {
+                display: block;
+            }
+            .full-width-button {
+                width: 100%;
+                text-align: left;
+                padding-left: 10px;
+                background: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .full-width-button:hover {
+                background: #45a049;
+            }
+
+            .fach-content a:last-child {
+                border-bottom: none;
+            }
+
+            .speech-bubble {
+                position: fixed;
+                top: 200px;
+                right: 20px;
+                width: 200px;
+                padding: 10px;
+                background: #f1f1f1;
+                border: 2px solid #000;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .speech-bubble:after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                right: 20px;
+                width: 0;
+                height: 0;
+                border: 10px solid transparent;
+                border-bottom-color: #f1f1f1;
+                border-top: 0;
+                border-right: 0;
+                margin-right: -5px;
+                margin-top: -10px;
+            }
+        </style>
+    </head>
+    <body onload="initializeText()">
+        <header>
+            <!-- Flexbox für das Logo und den Text -->
+            <div style="display: flex; align-items: center;">
+                <!-- Logo mit Link -->
+                <a href="#" onclick="redirectToMainPage()">
+                    <img src="textures/logo-header.png" alt="Logo">
+                </a>
+
+                <!-- Titel/Navigation -->
+                <h1>Main</h1>
+            </div>
+
+            <!-- Logout Button -->
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </header>
+        <main>
+            <!-- Fächer Dropdowns -->
+            <div class="fach-container">
+                <!-- Fach 1 -->
+                <div class="fach">
+                    <!-- Dropdown Button -->
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-1')">Programmieren 1</button>
+                    
+                    <!-- Dropdown Inhalt -->
+                    <div id="fach-content-1" class="fach-content"></div>
+                </div>
+
+                <!-- Fach 2 -->
+                <div class="fach">
+                    <!-- Dropdown Button -->
+                    <button class="full-width-button" onclick="toggleDropdown('fach-content-2')">Datenstrukturen und Algorithmen</button>
+                    
+                    <!-- Dropdown Inhalt -->
+                    <div id="fach-content-2" class="fach-content"></div>
+                </div>
+            </div>
+
+            <!-- Großes Maskottchen rechts -->
+            <div class="mascot-container">
+                <img src="textures/battery1.png" alt="Mascot">
+            </div>
+            <div class="speech-bubble" id="speech-bubble">
+                <p id="speech-text">Das sind deine Fächer. Klick sie an</p>
+            </div>
+        </main>
+        <footer>
+            <!-- Text im Footer -->
+            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="js/logout.js"></script>
+        <script src="js/redirectToMainPage.js"></script>
+        <script src="js/loadLoginData.js"></script>
+        <script>
+            //Erstellt das Auswahlmenue
+            function loadData(id) {
+                // Die Daten für Fächer und Aufgaben
+                const data = {
+                    "subjects": [
+                        {
+                            "name": "Programmieren_I", 
+                            "assignments": [
+                                {"name": "Assignment_01"},
+                                {"name": "Assignment_02"},
+                                {"name": "Assignment_03"},
+                                {"name": "Assignment_04"},
+                                {"name": "Assignment_05"},
+                                {"name": "Assignment_06"}
+                            ]
+                        },
+                        {
+                            "name": "Datenstrukturen_und_Algorithmen", 
+                            "assignments": [
+                                {"name": "Assignment_01"},
+                                {"name": "Assignment_02"},
+                                {"name": "Assignment_03"}
+                            ]
+                        }
+                    ]
+                };
+
+                //Feststellen des Fachs
+                var i = 0;
+                if (id != "fach-content-1") var i = 1;
+                const fach = document.getElementById(id);
+
+                //Löschen von zuvor erstellten Listen
+                while (fach.firstChild) {
+                    fach.removeChild(fach.firstChild);
+                }
+
+                //Erstellt die Liste der Assignments
+                data.subjects[i].assignments.forEach(assignment => {
+                    const assign = document.createElement('a');
+                    assign.href =  'assignment-tutor.html?subject=' + data.subjects[i].name + '&assignment=' + assignment.name;
+                    assign.textContent = assignment.name.replaceAll('_', ' ');
+                    fach.appendChild(assign);
+                })
+            }
+
+            function initializeText() {
+                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
+            }
+
+            // Funktion zum Umschalten der Sichtbarkeit eines Dropdown-Menüs
+            function toggleDropdown(id) {
+                //Erstellt den Inhalt
+                loadData(id);
+                // Holen des Dropdown-Elements anhand der übergebenen ID
+                document.getElementById(id).classList.toggle("show");
+                // Mit classList.toggle wird die Klasse "show" hinzugefügt oder entfernt, je nachdem, ob sie bereits vorhanden ist, wodurch das Dropdown sichtbar oder unsichtbar gemacht wird
+            }
+
+            // Funktion, die bei einem Klick auf das Fenster aufgerufen wird
+            window.onclick = function(event) {
+                // Überprüfen, ob der Klick nicht auf ein Button-Element im Dropdown erfolgt ist
+                if (!event.target.matches('.fach button')) {
+                    // Holen aller Dropdown-Menüs auf der Seite
+                    var dropdowns = document.getElementsByClassName("fach-content");
+                    // Schleife durch alle Dropdown-Menüs
+                    for (var i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        // Überprüfen, ob das Dropdown sichtbar ist (die Klasse "show" enthält)
+                        if (openDropdown.classList.contains('show')) {
+                            // Entfernen der "show"-Klasse, um das Dropdown unsichtbar zu machen
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -223,3 +223,231 @@
         </script>
     </body>
 </html>
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <!-- Meta -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Titel -->
+        <title>Main</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/mascot.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/sidebar.css">
+        <link rel="stylesheet" href="css/body.css">
+        <style>
+            .fach-container {
+                height: auto;
+                border: 1px solid #ccc;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                overflow-y: auto;
+            }
+
+            .fach {
+                position: relative;
+                display: block;
+            }
+
+            /* Styling der Buttons und Aufgaben wie in der Sidebar */
+            .fach-content {
+                display: block;
+                position: relative;
+                background-color: #e7e7ec; /* Gleicher Hintergrund wie die Sidebar */
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
+                border-radius: 5px; /* Abgerundete Ecken */
+                padding: 10px;
+                margin-top: 10px;
+            }
+
+            .fach-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                border-bottom: 1px solid #ddd; /* Trennlinien zwischen den Links */
+            }
+
+            .fach-content a:hover {
+                background-color: #ddd; /* Hover-Effekt wie in der Sidebar */
+            }
+
+            .full-width-button {
+                width: 100%;
+                text-align: left;
+                padding-left: 10px;
+                background: #4CAF50; /* Hintergrundfarbe des Buttons */
+                color: white; /* Textfarbe des Buttons */
+                border: none;
+                padding: 10px;
+                border-radius: 5px; /* Abgerundete Ecken */
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .full-width-button:hover {
+                background: #45a049; /* Hover-Effekt für den Button */
+            }
+
+            .fach-content a:last-child {
+                border-bottom: none; /* Entfernt die untere Trennlinie des letzten Links */
+            }
+
+            .speech-bubble {
+                position: fixed;
+                top: 200px;
+                right: 20px;
+                width: 200px;
+                padding: 10px;
+                background: #f1f1f1;
+                border: 2px solid #000;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .speech-bubble:after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                right: 20px;
+                width: 0;
+                height: 0;
+                border: 10px solid transparent;
+                border-bottom-color: #f1f1f1;
+                border-top: 0;
+                border-right: 0;
+                margin-right: -5px;
+                margin-top: -10px;
+            }
+        </style>
+    </head>
+    <body onload="initializeText()">
+        <!-- Header Leiste -->
+        <header>
+            <!-- Flexbox für das Logo und den Text -->
+            <div style="display: flex; align-items: center;">
+                <!-- Logo mit Link -->
+                <a href="#" onclick="redirectToMainPage()">
+                    <img src="textures/logo-header.png" alt="Logo">
+                </a>
+
+                <!-- Titel/Navigation -->
+                <h1>Main</h1>
+            </div>
+
+            <!-- Logout Button -->
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </header>
+
+        <!-- Main Teil der Seite -->
+        <main>
+            <!-- Fächer ohne Dropdowns -->
+            <div class="fach-container">
+                <!-- Dynamische Fächer und Aufgaben werden hier hinzugefügt -->
+            </div>
+        
+            <!-- Großes Maskottchen rechts -->
+            <div class="mascot-container">
+                <img src="textures/battery1.png" alt="Mascot">
+            </div>
+            <div class="speech-bubble" id="speech-bubble">
+                <p id="speech-text">Das sind deine Fächer. Klick sie an</p>
+            </div>
+        </main>
+        
+        <!-- Fußleiste -->
+        <footer>
+            <!-- Text im Footer -->
+            <p id="userInfo">Sie sind angemeldet als <span id="username"></span> (<span id="role"></span>)</p>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="js/logout.js"></script>
+        <script src="js/redirectToMainPage.js"></script>
+        <script src="js/loadLoginData.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+            // Die Daten für Fächer und Aufgaben
+            const data = {
+                "subjects": [
+                    {
+                        "name": "Programmieren_I", 
+                        "assignments": [
+                            {"name": "Assignment_01"},
+                            {"name": "Assignment_02"},
+                            {"name": "Assignment_03"},
+                            {"name": "Assignment_04"},
+                            {"name": "Assignment_06"},
+                            {"name": "Assignment_05"}
+                        ]
+                    },
+                    {
+                        "name": "Datenstrukturen_und_Algorithmen", 
+                        "assignments": [
+                            {"name": "Assignment_01"},
+                            {"name": "Assignment_02"},
+                            {"name": "Assignment_03"}
+                        ]
+                    }
+                ]
+            };
+
+            function initializeText() {
+                document.getElementById('speech-text').textContent = "Das sind deine Fächer. Klick sie an";
+            }
+
+            // Funktion, um die Fächer und Aufgaben in die HTML-Struktur zu laden
+            function loadSubjects() {
+                const fachContainer = document.querySelector('.fach-container'); // Fach-Container auswählen
+                const userSubjects = sessionStorage.getItem("subjects");
+
+                data.subjects.forEach((subject) => {
+                    // Zeige nur die Fächer an, die ein Student auch wirklich hat
+                    if (!userSubjects.includes(subject.name)) {
+                        return;
+                    }
+
+                    // Erstelle den Fach-Div
+                    const fachDiv = document.createElement('div');
+                    fachDiv.classList.add('fach');
+                    
+                    // Button für das Fach
+                    const fachButton = document.createElement('button');
+                    fachButton.classList.add('full-width-button');
+                    fachButton.textContent = subject.name.replaceAll('_', ' ');
+                    
+                    // Erstelle die Fach-Inhalte
+                    const fachContentDiv = document.createElement('div');
+                    fachContentDiv.classList.add('fach-content');
+                    
+                    // Füge die Assignments hinzu
+                    subject.assignments.forEach(assignment => {
+                        const assignmentLink = document.createElement('a');
+                        assignmentLink.href = 'assignment-student.html?subject=' + subject.name + '&assignment=' + assignment.name;
+                        assignmentLink.textContent = assignment.name.replaceAll('_', ' ');
+                        fachContentDiv.appendChild(assignmentLink);
+                    });
+                    
+                    // Füge den Button und den Inhalt zum Fach-Div hinzu
+                    fachDiv.appendChild(fachButton);
+                    fachDiv.appendChild(fachContentDiv);
+                    
+                    // Füge das Fach-Div zum Fach-Container hinzu
+                    fachContainer.appendChild(fachDiv);
+                });
+            }
+
+            // Initialisiere die Fächer beim Laden der Seite
+            loadSubjects();
+            });
+        </script>
+    </body>
+</html>
