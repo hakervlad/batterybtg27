@@ -265,27 +265,27 @@
                                 "Musterloesung.txt"
                             ], "users":[
                                 {
-                                    "username":"till",
+                                    "username":"Till",
                                     "role": "student",
                                     "submissions":[
                                     "Antworten.txt",
                                     "Weihnachtsbaum.jpg",
                                     "Weihnachtsbaum.pdf"
-                                ], "correction":"Korrektur.txt", "points":"15", "feedback":"Hier ist Feedback"},
+                                ], "correction":["Korrektur.txt"], "points":"15", "feedback":"Hier ist Feedback"},
                                     {
-                                        "username":"vlad",
+                                        "username":"Vlad",
                                         "role": "student",
                                         "submissions":[
                                         ], "correction":"", "points":"", "feedback":""},
                                     {
-                                        "username":"johann",
+                                        "username":"Johann",
                                         "role": "student",
                                         "submissions":[
                                         ], "correction":"", "points":"", "feedback":""},
                                     {
                                         "username": "tim",
                                         "role": "tutor",
-                                        "students": ["till", "vlad", "johann"]
+                                        "students": ["Till", "Vlad", "Johann"]
                                     }
                             ]},
                             {"name": "Assignment_02"},
@@ -461,6 +461,23 @@
                 const points = document.getElementById('points');
                 if (studentData.points)
                     points.value = studentData.points;
+
+                const submisisonList = document.getElementById('submissions-list');
+                const correction = studentData.correction;
+                correction.forEach(correction => {
+                    const fileElement = document.createElement('div');
+                    fileElement.classList.add('submission');
+                    fileElement.innerHTML = `
+                        <li class="document-item">
+                            <a href="./documents/${subjectName}/${assignmentName}/${studentName}/${correction}" target="_blank"><span>${correction}</span></a>
+                            <div class="button-group">
+                                <a href="./documents/${subjectName}/${assignmentName}/${studentName}/${correction}" download="${correction}"><button class="download-btn"><i class="fa fa-download" style="font-size:18px"></i></button></a>
+                                <button class="delete-btn" onclick="deleteFile(this)"><i class="fa fa-trash-o" style="font-size:18px"></i></button>
+                            </div>
+                        </li>
+                    `;
+                    submisisonList.appendChild(fileElement);
+                });
             });
 
             // Funktion, um die Dateien als ZIP herunterzuladen
